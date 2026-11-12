@@ -69,4 +69,67 @@ export const tools: Tool[] = [
     id: "advanced",
     studio: "music",
     name: "Advanced Music Studio",
-    blurb: "Finer control over bass, p
+    blurb: "Finer control over bass, percussion, buildup and drop, where the model supports it.",
+    phase: 5,
+    input: "none",
+    needs: "A music model that supports layer-level control. Not yet chosen.",
+  },
+  {
+    id: "transformer",
+    studio: "music",
+    name: "Track Transformer",
+    blurb: "Create a new variation from the broad characteristics of a reference track.",
+    phase: 5,
+    input: "audio",
+    needs: "Reference analysis plus a generation model. You must have rights to any track you upload.",
+  },
+  {
+    id: "enhancer",
+    studio: "video",
+    name: "Video Enhancer",
+    blurb: "Reduce noise and artifacts, sharpen, correct colour, and upscale where supported.",
+    phase: 4,
+    input: "video",
+    needs: "GPU processing through a separate worker or a pay-per-run service.",
+  },
+  {
+    id: "fps",
+    studio: "video",
+    name: "FPS Enhancer",
+    blurb: "Generate real in-between frames for smoother motion, not just a relabelled frame rate.",
+    phase: 4,
+    input: "video",
+    needs: "A frame-interpolation model on GPU infrastructure.",
+  },
+  {
+    id: "background-remover",
+    studio: "video",
+    name: "Background Remover",
+    blurb: "Separate the subject and export with a transparent, solid or image background.",
+    phase: 4,
+    input: "video",
+    needs: "A segmentation model on GPU infrastructure. Transparency limits the export formats.",
+  },
+  {
+    id: "subtitles",
+    studio: "video",
+    name: "Subtitle Studio",
+    blurb: "Transcribe speech, fix the text, style it, and export or burn it into the video.",
+    phase: 4,
+    input: "audio-or-video",
+    needs: "A speech-recognition service (TRANSCRIPTION_API_KEY) and FFmpeg for rendering.",
+  },
+  {
+    id: "edit-assistant",
+    studio: "video",
+    name: "Video-to-Edit Assistant",
+    blurb: "Detect scene changes and get explained cut, transition and zoom suggestions.",
+    phase: 6,
+    input: "video",
+    needs: "Scene detection with FFmpeg, plus the music analysis from Phase 2.",
+  },
+];
+
+export const toolsFor = (studio: Studio) => tools.filter((t) => t.studio === studio);
+export const findTool = (studio: Studio, id: string | undefined) =>
+  tools.find((t) => t.studio === studio && t.id === id);
