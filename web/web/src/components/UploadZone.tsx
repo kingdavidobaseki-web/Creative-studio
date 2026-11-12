@@ -59,4 +59,51 @@ export default function UploadZone({ accept, maxMb, label, onFile }: Props) {
         }}
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
-        className={`rounded-xl border-2 border-dashe
+        className={`rounded-xl border-2 border-dashed p-6 text-center transition ${
+          dragging ? "border-sky-400 bg-sky-500/5" : "border-zinc-700 bg-zinc-900/40"
+        }`}
+      >
+        {file ? (
+          <div>
+            <p className="break-all text-sm font-medium text-white">{file.name}</p>
+            <p className="mt-1 text-xs text-zinc-400">{formatSize(file.size)}</p>
+            <button type="button" onClick={clear} className="mt-3 text-sm text-zinc-400 underline hover:text-white">
+              Remove file
+            </button>
+          </div>
+        ) : (
+          <div>
+            <p className="text-sm text-zinc-300">{label}</p>
+            <button
+              type="button"
+              onClick={() => inputRef.current?.click()}
+              className="mt-3 rounded-md bg-zinc-800 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700"
+            >
+              Choose file
+            </button>
+            <p className="mt-3 text-xs text-zinc-500">
+              {accept.join(" ")} · up to {maxMb} MB
+            </p>
+          </div>
+        )}
+        <input
+          ref={inputRef}
+          type="file"
+          accept={accept.join(",")}
+          className="hidden"
+          aria-label={label}
+          tabIndex={-1}
+          onChange={(e) => {
+            handle(e.target.files?.[0]);
+            e.target.value = "";
+          }}
+        />
+      </div>
+      {error && (
+        <p role="alert" className="mt-2 text-sm text-red-400">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+    }
